@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Web Development Roadmap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background 0.3s, color 0.3s;
+        }
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+        .dark-mode {
+            background: #222;
+            color: white;
+        }
+        .dark-mode li {
+            background: #333;
+            color: white;
+        }
+        .progress {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 500px;
+        }
+        progress {
+            width: 100%;
+            height: 20px;
+        }
+        .roadmap {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+            text-align: left;
+        }
+        h2 {
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s, color 0.3s;
+        }
+        .celebration {
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+            margin-top: 15px;
+            display: none;
+        }
+        .time {
+            font-size: 14px;
+            color: gray;
+        }
+        .completed-time {
+            font-size: 12px;
+            color: darkgreen;
+            margin-left: 10px;
+        }
+        .week-complete-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🚀 Web Development Roadmap</h1>
+        <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+    </header>
+
+    <main>
+        <section class="progress">
+            <h2>📊 Progress Tracker</h2>
+            <p>Completed: <span id="completed-count">0</span> / <span id="total-count">0</span></p>
+            <progress id="progress-bar" value="0"></progress>
+        </section>
+
+        <section class="roadmap">
+            <h2>📅 8-Week Learning Plan</h2>
+            <ul id="roadmap-list"></ul>
+        </section>
+
+        <div id="final-message" class="celebration">
+            🎉 *Congratulations! You have completed the entire Web Development Roadmap!* 🚀🔥  
+            "The only way to do great work is to love what you do!" – Steve Jobs
+        </div>
+
+        <!-- Week Complete Popup -->
+        <div id="week-complete-popup" class="week-complete-popup">
+            🎉 *Week Completed!* 🚀<br>
+            Keep up the great work! You're one step closer to becoming a web development pro! 💪
+        </div>
+    </main>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;"></canvas>
+
+    <script>
+        const roadmap = {
+            "Week 1 (HTML & CSS Basics)": [
+                "Introduction to Web Development, HTML Basics",
+                "Forms, Tables, and Semantic HTML",
+                "CSS Basics - Selectors, Colors, Typography",
+                "CSS Box Model, Flexbox",
+                "CSS Grid, Positioning",
+                "Responsive Web Design (Media Queries)",
+                "Project - Build a Personal Portfolio Website"
+            ],
+            "Week 2 (JavaScript Basics)": [
+                "Introduction to JavaScript, Variables, Data Types",
+                "Functions, Loops, Arrays",
+                "DOM Manipulation, Event Listeners",
+                "Fetch API, JSON, Async/Await",
+                "ES6 Features - Arrow Functions, Spread/Rest",
+                "Error Handling, Debugging",
+                "Project - Build a To-Do List App"
+            ],
+            "Week 3 (Advanced JS & Git)": [
+                "JavaScript Modules & Local Storage",
+                "Introduction to Git & GitHub",
+                "Git Branching, Merging, Pull Requests",
+                "JavaScript Promises & Async Programming",
+                "JavaScript Classes & OOP",
+                "Introduction to React.js Basics",
+                "Project - Build a Weather App using API"
+            ],
+            "Week 4 (React.js & Frontend Frameworks)": [
+                "React Components, Props, State",
+                "React Hooks (useState, useEffect)",
+                "React Router, Forms Handling",
+                "Tailwind CSS & Bootstrap",
+                "Styled Components, Material UI",
+                "Advanced React Concepts - Context API, Redux",
+                "Project - Build a Movie Search App"
+            ],
+            "Week 5 (Backend Basics)": [
+                "Introduction to Backend, Node.js Basics",
+                "Express.js - Routing & Middleware",
+                "Handling Forms & File Uploads",
+                "Introduction to REST API",
+                "Authentication - JWT, OAuth",
+                "Securing APIs - CORS, CSRF",
+                "Project - Build a Login & Signup System"
+            ],
+            "Week 6 (Databases)": [
+                "Introduction to Databases",
+                "SQL Basics - MySQL, PostgreSQL",
+                "NoSQL Basics - MongoDB, Firebase",
+                "Database Relationships & Normalization",
+                "Connecting Database with Backend",
+                "CRUD Operations with SQL & MongoDB",
+                "Project - Build a Blog with Database"
+            ],
+            "Week 7 (APIs, Security & Performance)": [
+                "API Development - REST & GraphQL",
+                "Authentication Best Practices",
+                "Web Security - SQL Injection Prevention",
+                "Performance Optimization - Caching, Lazy Loading",
+                "Testing - Unit, Integration, Automation",
+                "Debugging & Error Handling",
+                "Project - Build a Secure Notes App"
+            ],
+            "Week 8 (DevOps & Deployment)": [
+                "Introduction to Cloud Hosting (Netlify, Vercel)",
+                "Server Deployment - AWS, Heroku",
+                "CI/CD Pipelines",
+                "Docker & Containerization",
+                "Monitoring & Logging",
+                "Full-Stack App Deployment",
+                "Project - Deploy a Full-Stack App"
+            ]
+        };
+
+        const roadmapList = document.getElementById("roadmap-list");
+        let completedCount = 0;
+        let totalCount = 0;
+        const progressBar = document.getElementById("progress-bar");
+        const finalMessage = document.getElementById("final-message");
+        const weekCompletePopup = document.getElementById("week-complete-popup");
+
+        // Track completed tasks per week
+        const weekCompletion = new Array(Object.keys(roadmap).length).fill(0);
+
+        // Confetti setup
+        const canvas = document.getElementById("confetti-canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function createConfetti() {
+            const confetti = [];
+            for (let i = 0; i < 150; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 5 + 2,
+                    color: hsl(${Math.random() * 360}, 100%, 50%),
+                    velocity: {
+                        x: (Math.random() - 0.5) * 10,
+                        y: Math.random() * 5 + 2
+                    }
+                });
+            }
+            return confetti;
+        }
+
+        let confettiPieces = [];
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confettiPieces.forEach((piece) => {
+                ctx.beginPath();
+                ctx.arc(piece.x, piece.y, piece.radius, 0, Math.PI * 2);
+                ctx.fillStyle = piece.color;
+                ctx.fill();
+                piece.x += piece.velocity.x;
+                piece.y += piece.velocity.y;
+                if (piece.y > canvas.height) {
+                    piece.y = 0;
+                }
+            });
+            requestAnimationFrame(drawConfetti);
+        }
+
+        function startConfetti() {
+            confettiPieces = createConfetti();
+            drawConfetti();
+            setTimeout(() => {
+                confettiPieces = [];
+            }, 5000); // Stop confetti after 5 seconds
+        }
+
+        Object.entries(roadmap).forEach(([week, topics], weekIndex) => {
+            const weekTitle = document.createElement("h2");
+            weekTitle.textContent = week;
+            roadmapList.appendChild(weekTitle);
+
+            topics.forEach((topic, index) => {
+                const day = Day ${weekIndex * 7 + index + 1};
+                const li = document.createElement("li");
+                li.innerHTML = <label><input type="checkbox"> ${day} - ${topic} <span class="time">(2 hours)</span></label><span class="completed-time"></span>;
+                roadmapList.appendChild(li);
+                totalCount++;
+
+                li.querySelector("input").addEventListener("change", (e) => {
+                    const completedTime = li.querySelector(".completed-time");
+                    if (e.target.checked) {
+                        completedCount++;
+                        completedTime.textContent = ✔ Completed at ${new Date().toLocaleTimeString()};
+                        weekCompletion[weekIndex]++; // Increment completed tasks for this week
+                        if (weekCompletion[weekIndex] === topics.length) {
+                            showWeekCompletePopup(week);
+                            startConfetti(); // Start confetti for week completion
+                        }
+                    } else {
+                        completedCount--;
+                        completedTime.textContent = "";
+                        weekCompletion[weekIndex]--; // Decrement completed tasks for this week
+                    }
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            document.getElementById("completed-count").textContent = completedCount;
+            document.getElementById("total-count").textContent = totalCount;
+            progressBar.value = completedCount;
+            progressBar.max = totalCount;
+            if (completedCount === totalCount) {
+                finalMessage.style.display = "block";
+                startConfetti(); // Start confetti for final completion
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+
+        function showWeekCompletePopup(week) {
+            weekCompletePopup.textContent = 🎉 **${week} Completed!** 🚀\nKeep up the great work! You're one step closer to becoming a web development pro! 💪;
+            weekCompletePopup.style.display = "block";
+            setTimeout(() => {
+                weekCompletePopup.style.display = "none";
+            }, 5000); // Hide the popup after 5 seconds
+        }
+    </script>
+
+</body>
+</html>
